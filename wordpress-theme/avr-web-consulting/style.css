@@ -1,0 +1,19 @@
+/*
+Theme Name: AVR Web Consulting
+Theme URI: https://avrwebconsulting.com/
+Author: AVR Web Consulting
+Author URI: https://avrwebconsulting.com/
+Description: High-performance WordPress theme for AVR Web Consulting - Optimized for Core Web Vitals, WCAG AA Accessibility, and Instant Rendering.
+Version: 1.0.2
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: avr-web-consulting
+*/
+
+/*
+ * Note: Stylesheet is enqueued via wp_enqueue_style in functions.php to avoid
+ * render-blocking CSS @import chaining flagged by PageSpeed Insights.
+ */
