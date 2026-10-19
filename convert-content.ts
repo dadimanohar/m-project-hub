@@ -184,6 +184,103 @@ industryPages.forEach((p) => addPage(p));
 locationPages.forEach((p) => addPage(p));
 blogPosts.forEach((p) => addPage(p, "post"));
 
+// ---- Homepage (from home.ts) ----
+function cardGrid(items: { title: string; text: string; to: string }[], cols = 3): string {
+  const cards = items
+    .map(
+      (c) => `<!-- wp:group {"className":"avr-card","layout":{"type":"constrained"}} -->\n<div class="wp-block-group avr-card"><!-- wp:heading {"level":3} -->\n<h3 class="wp-block-heading"><a href="${esc(c.to)}">${inline(c.title)}</a></h3>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p>${inline(c.text)}</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph {"className":"avr-explore"} -->\n<p class="avr-explore"><a href="${esc(c.to)}">Explore →</a></p>\n<!-- /wp:paragraph --></div>\n<!-- /wp:group -->`
+    )
+    .join("\n");
+  return `<!-- wp:group {"className":"avr-card-grid avr-cols-${cols}","layout":{"type":"constrained"}} -->\n<div class="wp-block-group avr-card-grid avr-cols-${cols}">\n${cards}\n</div>\n<!-- /wp:group -->\n`;
+}
+
+function homePageBlocks(): string {
+  let out = "";
+  // Hero: cover-style group with poster image; video is added progressively by theme JS.
+  out += `<!-- wp:group {"className":"avr-hero","layout":{"type":"constrained"}} -->\n<div class="wp-block-group avr-hero"><!-- wp:paragraph {"className":"avr-eyebrow avr-eyebrow-light"} -->\n<p class="avr-eyebrow avr-eyebrow-light">Full-service digital marketing agency</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading {"level":1} -->\n<h1 class="wp-block-heading">Grow Your Business With Smarter Digital Marketing</h1>\n<!-- /wp:heading -->\n<!-- wp:paragraph {"className":"avr-hero-lead"} -->\n<p class="avr-hero-lead">AVR Web Consulting helps businesses build stronger online visibility, attract qualified traffic, generate leads, and grow through SEO, advertising, content marketing, and web development.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph {"className":"avr-hero-sub"} -->\n<p class="avr-hero-sub">Now expanding into AI Search, Advanced Web Development &amp; Business Automation.</p>\n<!-- /wp:paragraph -->\n<!-- wp:buttons -->\n<div class="wp-block-buttons"><!-- wp:button -->\n<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/contact">Request a digital audit</a></div>\n<!-- /wp:button -->\n<!-- wp:button {"className":"is-style-outline"} -->\n<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="https://wa.me/918121423455?text=Hello%20AVR%20Web%20Consulting%2C%20I%20would%20like%20to%20discuss%20your%20services.">WhatsApp</a></div>\n<!-- /wp:button -->\n<!-- wp:button {"className":"is-style-outline"} -->\n<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="tel:+918121423455">Call +91 81214 23455</a></div>\n<!-- /wp:button --></div>\n<!-- /wp:buttons --></div>\n<!-- /wp:group -->\n`;
+  // Who we are
+  out += blockParagraph("Who we are", "avr-eyebrow");
+  out += blockHeading("A digital marketing agency focused on sustainable online growth", 2);
+  out += blockParagraph("We help businesses improve their online presence, reach the right audience, and turn digital visibility into business growth through SEO, advertising, social media, content, and web development.");
+  out += blockCallout("What is AVR Web Consulting?", homeAnswer);
+  out += `<!-- wp:image {"sizeSlug":"large"} -->\n<figure class="wp-block-image size-large"><img src="/wp-content/themes/avr-web-consulting/assets/images/image1.webp" alt="AVR Web Consulting digital strategy team"/></figure>\n<!-- /wp:image -->\n`;
+  // Stats
+  const statCells = homeStats
+    .map(
+      (s) => `<!-- wp:column -->\n<div class="wp-block-column"><!-- wp:paragraph {"className":"avr-highlight-label"} -->\n<p class="avr-highlight-label">${inline(s.label)}</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph {"className":"avr-highlight-value"} -->\n<p class="avr-highlight-value">${inline(s.value)}</p>\n<!-- /wp:paragraph --></div>\n<!-- /wp:column -->`
+    )
+    .join("\n");
+  out += `<!-- wp:columns {"className":"avr-highlights"} -->\n<div class="wp-block-columns avr-highlights">\n${statCells}\n</div>\n<!-- /wp:columns -->\n`;
+  // Services
+  out += blockHeading("Digital Marketing Services That Drive Growth", 2, "services");
+  out += blockParagraph("From SEO and paid advertising to content marketing and web development, AVR Web Consulting provides the core digital services businesses need to build visibility, attract customers, and grow online.");
+  out += cardGrid(homeServices, 4);
+  // SEO services
+  out += blockHeading("Build a Stronger Search Presence", 2);
+  out += blockParagraph("Our SEO services improve technical website health, local and global discovery, geographic relevance, and the ability to attract useful organic traffic.");
+  out += cardGrid(homeSeoServices, 3);
+  // Growth
+  out += blockHeading("Turn Visibility Into Meaningful Business Activity", 2);
+  out += blockParagraph("Our advertising, content, and website services work together to reach audiences, communicate value, build trust, and support conversion.");
+  out += cardGrid(homeGrowthServices, 3);
+  // Process
+  out += blockHeading("A Connected Journey From Discovery to Digital Progress", 2);
+  out += blockSteps(undefined, homeProcess.map((p) => ({ title: p.title, text: p.text })));
+  // AI SEO
+  out += blockHeading("AI SEO & AI Search Visibility", 2);
+  out += blockParagraph("Search is evolving beyond traditional search engines. Our AI SEO services help businesses structure and optimize their digital presence for emerging AI-driven discovery experiences.");
+  out += cardGrid(homeAiServices, 3);
+  out += `<!-- wp:image {"sizeSlug":"large"} -->\n<figure class="wp-block-image size-large"><img src="/wp-content/themes/avr-web-consulting/assets/images/image2.webp" alt="AI search platforms covered by AVR Web Consulting"/></figure>\n<!-- /wp:image -->\n`;
+  // Development
+  out += blockHeading("Advanced Full-Stack Web Development", 2);
+  out += blockParagraph("When standard website solutions are not enough, we build custom digital experiences and web applications using modern development technologies, selected around the business outcome rather than the technology itself.");
+  out += blockList(homeDevelopmentTechnologies);
+  // Automation
+  out += blockHeading("AI Agents & Business Automation", 2);
+  out += blockParagraph("Automate repetitive processes, connect business tools, and build intelligent workflows that help businesses operate more efficiently.");
+  out += cardGrid(homeAutomationServices, 3);
+  // FAQs
+  out += blockHeading("AVR Web Consulting — frequently asked questions", 2, "faqs");
+  for (const f of homeFaqs) out += blockDetails(f.question, f.answer);
+  return out;
+}
+
+// ---- FAQs page (from faqs.ts) ----
+function faqsPageBlocks(): string {
+  let out = blockHeading("Frequently asked questions", 1);
+  out += blockParagraph("Answers to common questions about AVR Web Consulting's SEO, AI SEO, advertising, content marketing, web development, and automation services.");
+  for (const cat of faqCategories) {
+    out += blockHeading(`${cat} (${faqCountByCategory[cat] ?? 0})`, 2);
+    for (const f of allFaqs.filter((x) => x.category === cat)) {
+      out += blockDetails(f.question, f.answer);
+    }
+  }
+  return out;
+}
+
+// ---- Contact page ----
+function contactPageBlocks(): string {
+  let out = blockHeading("Contact AVR Web Consulting", 1);
+  out += blockParagraph("Tell us about your business goals and we will recommend practical next steps for your website, search visibility, and lead generation. We usually respond within one business day.");
+  out += blockHeading("Send us a message", 2);
+  out += `<!-- wp:shortcode -->\n[avr_contact_form]\n<!-- /wp:shortcode -->\n`;
+  out += blockHeading("Other ways to reach us", 2);
+  out += blockList([
+    "Email: info@avrwebconsulting.com",
+    "Phone: +91 91825 43249 (Mon–Sat, 09:30–19:00 IST)",
+    "WhatsApp: chat with us at +91 91825 43249",
+    "Address: Hero Showroom Lane, D No: 43-18-16, Venkatarajunagar, TSN Colony, Beside Sri Ram Insurance, Dondaparthy, Visakhapatnam – 530016, Andhra Pradesh, India",
+  ]);
+  return out;
+}
+
+defs.push(
+  { slug: "/", title: "AVR Web Consulting | Digital Marketing & AI SEO Agency", description: "AVR Web Consulting is a full-service digital marketing agency in Visakhapatnam, India, offering SEO, AI SEO, advertising, content marketing, web development, and business automation.", content: homePageBlocks(), type: "page" },
+  { slug: "/faqs", title: "FAQs | AVR Web Consulting", description: "Answers to common questions about AVR Web Consulting's SEO, AI SEO, advertising, content, web development, and automation services.", content: faqsPageBlocks(), type: "page" },
+  { slug: "/contact", title: "Contact Us | AVR Web Consulting", description: "Contact AVR Web Consulting for SEO, AI SEO, advertising, content marketing, web development, and automation services. Request a free digital audit.", content: contactPageBlocks(), type: "page" },
+);
+seen.add("/"); seen.add("/faqs"); seen.add("/contact");
+
 // Emit one PHP file per top-level section for maintainability.
 const groups = new Map<string, PageDef[]>();
 for (const d of defs) {
