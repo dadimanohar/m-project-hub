@@ -24,4 +24,7 @@ return array(
   'industries.php' => 11,
   'locations.php' => 13,
   'blog.php' => 25,
+  'home.php' => 1,
+  'faqs.php' => 1,
+  'contact.php' => 1,
 );
