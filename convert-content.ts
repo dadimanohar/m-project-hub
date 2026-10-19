@@ -19,6 +19,11 @@ import {
   aiCitations, aiRetrievalSystems,
 } from "@/content/pages/ai-seo";
 import { blogPosts, blogHub } from "@/content/pages/blog";
+import {
+  homeAnswer, homeStats, homeServices, homeSeoServices, homeGrowthServices,
+  homeProcess, homeAiServices, homeDevelopmentTechnologies, homeAutomationServices, homeFaqs,
+} from "@/content/pages/home";
+import { allFaqs, faqCategories, faqCountByCategory } from "@/content/faqs";
 import { caseStudyPages, caseStudiesHub } from "@/content/pages/case-studies";
 import { industryPages, industriesHub } from "@/content/pages/industries";
 import { locationPages, locationsHub } from "@/content/pages/locations";
