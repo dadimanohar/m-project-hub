@@ -57,6 +57,21 @@ function avr_content_library() {
  */
 function avr_find_existing($def) {
     $path = trim($def['path'], '/');
+
+    // Most reliable: the content-path meta stored at import time. Survives
+    // slug changes and WordPress auto-suffixing (e.g. privacy-policy-2).
+    $by_meta = get_posts(array(
+        'post_type'      => array('page', 'post'),
+        'post_status'    => array('publish', 'draft', 'private', 'pending', 'future'),
+        'meta_key'       => '_avr_content_path',
+        'meta_value'     => $def['path'],
+        'numberposts'    => 1,
+        'suppress_filters' => true,
+    ));
+    if ($by_meta) {
+        return $by_meta[0];
+    }
+
     if ('' === $path) {
         // Homepage: check the configured static front page first.
         $front_id = (int) get_option('page_on_front');
@@ -86,14 +101,15 @@ function avr_find_existing($def) {
     }
 
     $page = get_page_by_path($path, OBJECT, 'page');
-    if ($page && 'publish' === $page->post_status) {
+    if ($page && 'trash' !== $page->post_status) {
         return $page;
     }
-    // Fallback: match by final slug anywhere (handles hierarchy differences).
+    // Fallback: match by final slug anywhere (handles hierarchy differences
+    // and the WordPress default draft Privacy Policy page).
     $found = get_posts(array(
         'post_type'   => 'page',
         'name'        => $def['slug'],
-        'post_status' => 'publish',
+        'post_status' => array('publish', 'draft', 'private', 'pending'),
         'numberposts' => 1,
     ));
     return $found ? $found[0] : null;
