@@ -146,6 +146,19 @@ function avr_import_run() {
     foreach (avr_content_library() as $def) {
         $existing = avr_find_existing($def);
         if ($existing) {
+            // A matching item exists (e.g. the WordPress default draft
+            // Privacy Policy page). Never overwrite its content — just make
+            // sure it is published and tagged with its content path.
+            if ('publish' !== $existing->post_status && empty($existing->post_content)) {
+                wp_update_post(array(
+                    'ID'           => $existing->ID,
+                    'post_status'  => 'publish',
+                    'post_content' => $def['content'],
+                    'post_title'   => wp_strip_all_tags($def['title']),
+                ));
+                update_post_meta($existing->ID, '_avr_meta_description', $def['description']);
+            }
+            update_post_meta($existing->ID, '_avr_content_path', $def['path']);
             $results[] = array(
                 'path'   => $def['path'],
                 'type'   => $def['type'],
@@ -194,6 +207,7 @@ function avr_import_run() {
         }
 
         update_post_meta($post_id, '_avr_meta_description', $def['description']);
+        update_post_meta($post_id, '_avr_content_path', $def['path']);
         if ('post' === $def['type']) {
             wp_set_post_categories($post_id, array(1)); // Uncategorized default; editable later.
         }
