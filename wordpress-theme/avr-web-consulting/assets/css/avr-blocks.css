@@ -1,0 +1,546 @@
+/**
+ * AVR Web Consulting — block theme stylesheet.
+ *
+ * Replaces the previous 121 KB utility framework with the design tokens and
+ * component styles the approved design actually uses. Design tokens mirror
+ * theme.json so the Site Editor and front end stay in sync.
+ */
+
+:root {
+  --avr-background: #ffffff;
+  --avr-foreground: #161b26;
+  --avr-primary: #22a7e0;
+  --avr-primary-text: #0369a1; /* WCAG AA on white */
+  --avr-primary-foreground: #ffffff;
+  --avr-ink: #0e1116;
+  --avr-ink-foreground: #f4f7f9;
+  --avr-mist: #f4f8fb;
+  --avr-muted-foreground: #5b6472;
+  --avr-amber: #f5a623;
+  --avr-border: #dde4ea;
+  --avr-radius: 0.875rem;
+  --avr-font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --avr-font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--avr-background);
+  color: var(--avr-foreground);
+  font-family: var(--avr-font-body);
+  font-feature-settings: 'kern', 'liga';
+  text-rendering: optimizeLegibility;
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--avr-font-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  line-height: 1.15;
+}
+
+:focus-visible {
+  outline: 2px solid var(--avr-primary);
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--avr-primary-text);
+}
+
+a:hover {
+  color: var(--avr-primary);
+}
+
+/* ---------- Layout ---------- */
+
+.container-page,
+.avr-page,
+.avr-single {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding: 4rem 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .container-page,
+  .avr-page,
+  .avr-single {
+    padding: 5rem 2rem;
+  }
+}
+
+/* ---------- Header ---------- */
+
+.avr-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--avr-border);
+  padding: 0.75rem 1.25rem;
+}
+
+.avr-header-inner {
+  max-width: 80rem;
+  margin-inline: auto;
+  gap: 1rem;
+}
+
+.avr-brand .wp-block-site-title a {
+  color: var(--avr-foreground);
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+
+.avr-nav .wp-block-navigation__container {
+  gap: 1.25rem;
+}
+
+.avr-nav a {
+  color: var(--avr-foreground);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.avr-nav a:hover {
+  color: var(--avr-primary-text);
+}
+
+.avr-nav .wp-block-navigation__submenu-container {
+  background: var(--avr-background);
+  border: 1px solid var(--avr-border);
+  border-radius: var(--avr-radius);
+  box-shadow: 0 12px 32px rgba(14, 17, 22, 0.12);
+  padding: 0.5rem;
+}
+
+.avr-nav .wp-block-navigation__submenu-container a {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.avr-nav .wp-block-navigation__submenu-container a:hover {
+  background: var(--avr-mist);
+}
+
+@media (max-width: 1023px) {
+  .avr-header-cta {
+    display: none;
+  }
+}
+
+/* ---------- Hero (homepage) ---------- */
+
+.avr-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 38rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 1.25rem;
+  background: var(--avr-ink) url('../images/home-hero-poster.webp') center / cover no-repeat;
+  color: var(--avr-ink-foreground);
+}
+
+@media (min-width: 1024px) {
+  .avr-hero {
+    min-height: 44rem;
+    padding: 6rem 2rem;
+  }
+}
+
+.avr-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to right, rgba(14, 17, 22, 0.95), rgba(14, 17, 22, 0.8), rgba(14, 17, 22, 0.5));
+}
+
+.avr-hero > * {
+  max-width: 80rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.avr-hero h1 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  max-width: 56rem;
+  color: #ffffff;
+}
+
+.avr-hero .avr-hero-lead {
+  font-size: 1.125rem;
+  max-width: 42rem;
+  color: rgba(244, 247, 249, 0.85);
+}
+
+.avr-hero .avr-hero-sub {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(244, 247, 249, 0.7);
+}
+
+.avr-hero video.avr-hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avr-hero .wp-block-button__link.is-style-outline,
+.avr-hero .is-style-outline .wp-block-button__link {
+  background: transparent;
+  border: 1px solid rgba(244, 247, 249, 0.35);
+  color: var(--avr-ink-foreground);
+}
+
+/* ---------- Content components ---------- */
+
+.avr-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  border-radius: 9999px;
+  border: 1px solid var(--avr-border);
+  background: var(--avr-mist);
+  padding: 0.375rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--avr-primary-text);
+}
+
+.avr-eyebrow-light {
+  border-color: rgba(244, 247, 249, 0.25);
+  background: rgba(244, 247, 249, 0.1);
+  color: rgba(244, 247, 249, 0.9);
+}
+
+.avr-callout {
+  border: 1px solid rgba(34, 167, 224, 0.3);
+  background: var(--avr-mist);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  margin-block: 1.5rem;
+}
+
+.avr-callout h3 {
+  margin-top: 0;
+  font-size: 1.125rem;
+}
+
+.avr-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.avr-highlights {
+  border: 1px solid var(--avr-border);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  margin-block: 2rem;
+  gap: 1.5rem;
+}
+
+.avr-highlight-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--avr-muted-foreground);
+  margin-bottom: 0.25rem;
+}
+
+.avr-highlight-value {
+  font-family: var(--avr-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0;
+}
+
+.avr-card-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-block: 2rem;
+}
+
+@media (min-width: 640px) {
+  .avr-card-grid.avr-cols-3,
+  .avr-card-grid.avr-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .avr-card-grid.avr-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .avr-card-grid.avr-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.avr-card {
+  border: 1px solid var(--avr-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: border-color 0.2s ease;
+}
+
+.avr-card:hover {
+  border-color: var(--avr-primary);
+}
+
+.avr-card h3 {
+  margin-top: 0;
+  font-size: 1.125rem;
+}
+
+.avr-card h3 a {
+  color: var(--avr-foreground);
+  text-decoration: none;
+}
+
+.avr-card h3 a:hover {
+  color: var(--avr-primary-text);
+}
+
+.avr-card p {
+  font-size: 0.875rem;
+  color: var(--avr-muted-foreground);
+}
+
+.avr-explore a {
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.avr-cta {
+  border-radius: 1.25rem;
+  background: var(--avr-ink);
+  color: var(--avr-ink-foreground);
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-block: 3rem;
+}
+
+.avr-cta h2 {
+  color: #ffffff;
+  margin-top: 0;
+}
+
+/* ---------- FAQ (native Details block) ---------- */
+
+.wp-block-details {
+  border-bottom: 1px solid var(--avr-border);
+  padding-block: 0.25rem;
+}
+
+.wp-block-details summary {
+  cursor: pointer;
+  font-family: var(--avr-font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  padding-block: 0.75rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wp-block-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.wp-block-details summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid var(--avr-muted-foreground);
+  border-bottom: 2px solid var(--avr-muted-foreground);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.wp-block-details[open] summary::after {
+  transform: rotate(225deg);
+}
+
+.wp-block-details summary:hover {
+  text-decoration: underline;
+}
+
+.wp-block-details p {
+  color: var(--avr-muted-foreground);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Tables ---------- */
+
+.wp-block-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.wp-block-table th,
+.wp-block-table td {
+  border: 1px solid var(--avr-border);
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+}
+
+.wp-block-table th {
+  background: var(--avr-mist);
+  font-family: var(--avr-font-display);
+}
+
+.wp-block-table.is-style-stripes tbody tr:nth-child(odd) {
+  background: var(--avr-mist);
+}
+
+/* ---------- Forms ---------- */
+
+.avr-inquiry-form {
+  border: 1px solid var(--avr-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  background: var(--avr-mist);
+}
+
+.avr-form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .avr-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .avr-form-full {
+    grid-column: 1 / -1;
+  }
+}
+
+.avr-inquiry-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.avr-inquiry-form input,
+.avr-inquiry-form select,
+.avr-inquiry-form textarea {
+  border: 1px solid var(--avr-border);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  font: inherit;
+  background: #ffffff;
+  color: var(--avr-foreground);
+}
+
+.avr-inquiry-form button {
+  margin-top: 1.25rem;
+  cursor: pointer;
+  border: none;
+}
+
+.form-success-notice {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ---------- Footer ---------- */
+
+.avr-footer {
+  padding: 3.5rem 1.25rem 2rem;
+}
+
+.avr-footer a {
+  color: var(--avr-ink-foreground);
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.avr-footer a:hover {
+  opacity: 1;
+  color: var(--avr-primary);
+}
+
+.avr-footer-cols {
+  gap: 2rem;
+}
+
+.avr-footer h3 {
+  color: #ffffff;
+}
+
+.avr-footer ul.wp-block-list {
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.875rem;
+  line-height: 2;
+}
+
+.avr-footer-sep {
+  border-color: rgba(244, 247, 249, 0.15);
+  margin-block: 2rem;
+}
+
+.avr-footer-copy {
+  opacity: 0.6;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Accessibility & motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-request-audit-btn {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}
